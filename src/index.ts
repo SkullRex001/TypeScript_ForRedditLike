@@ -179,3 +179,115 @@ const errorHandler = (): never => {
     throw new Error();
     //return new Error ----> this will be of Error type
 }
+
+
+//////////////////////////////////////////////////////
+
+//Classes
+
+// In JS there are no access modifiers ,but in TS there are access modifiers
+
+// Public :- class prop or method that can be accessed anywhere
+
+//Private :- class prop or method that can only be accesses in the class
+
+//Protected : - class prop that or method that can only be accessed in class or in extended class
+
+class Player {
+    public readonly id: string
+    constructor(private height: number, public weight: number, protected power: number) {
+        this.height = height;
+        this.weight = weight;
+        this.power = power;
+        this.id = String(Math.random() * 100)
+
+    }
+
+    getMyHeight = () => this.height;
+    //height can be accessed here
+}
+
+class Player2 extends Player {
+    special: boolean
+    constructor(height: number, weight: number, power: number, special: boolean) {
+        super(height, weight, power)
+        this.special = special
+    }
+
+    // this class can access weight and power prop from supe class
+
+    // getMyHeight2: () => this.height //NOT ALLOWED
+
+    getMyWeight = () => this.weight;
+
+    getMyPower = () => this.power;
+
+
+}
+
+
+const player1 = new Player(7.7, 90, 100)
+
+// player1.height and player1.power is NOT ALLOWED
+
+
+// Setter and Getter Method
+
+class Human {
+    private population: string
+    constructor(public height: number, public weight: number) {
+        //this.height = height 
+        //this.weight = weight 
+        //these things are automatically done
+        this.population = "4 billion"
+    }
+
+    get getPopulation(): string {
+        return this.population
+    }
+
+    set changeHeight(val: number) {
+        this.height = val
+    }
+}
+
+const Human1 = new Human(12, 100)
+
+console.log("height " + Human1.getPopulation)
+//see, it is getPopulation not getPopulation()
+
+console.log(Human1.height)
+
+Human1.changeHeight = 200;
+
+console.log(Human1.height)
+
+interface ProductType {
+    name: string,
+    price: number,
+    stock: string,
+    offer?: boolean
+}
+
+interface GiveId {
+    getId : () => string
+}
+//note we cannot declare private and protected here , if we want to do this , we will have to add prop in class with access modifiers directly
+
+class Product implements ProductType , GiveId{
+    name: string;
+    price: number;;
+    stock: string;
+    private id: string = String(Math.random())
+
+    constructor(name: string, price: number, stock: string) {
+        this.name = name;
+        this.price = price;
+        this.stock = stock;
+        this.id;
+
+    }
+
+    getId = () => this.id
+
+}
