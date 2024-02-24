@@ -101,6 +101,101 @@ const obj3: Obj4 = {
 
 }
 
+
+interface Person {
+    name : string,
+    email : string
+}
+
+const myobj : Person = {
+    name : "AVS",
+    email : "AVS@gmail.com"
+}
+
+// Allowed
+
+const getName = (): string =>{
+    return myobj["name"]
+}
+
+//Allowed
+
+const getEmail = () : string =>{
+    return myobj["email"]
+}
+
+//NOT ALLOWED
+
+//This is because key here can be anything , but in our interface there are only two keys
+
+// const getDetils = (key:string): string=>{
+//     return myobj[key]
+// }
+
+//ALLOWED
+
+type KEY = 'name'| 'email'
+
+const getDetils = (key:KEY): string=>{
+    return myobj[key]
+}
+
+
+// Defining general interface for object in which we don't know the number of keys
+
+interface PERSON {
+    [key : string] : string
+}
+
+const MYOBJ : PERSON = {
+    name : "AVS",
+    email : "AVS@gmail.com"
+}
+
+// ALLOWED
+
+// This is because of general nature of interface
+
+const GETDETAILS = (key:string): string=>{
+    return MYOBJ[key]
+}
+
+//but there is a problem , here we can pass anything in key and got MYOBJ anything other than name and email will return undefined
+
+//Best Solution
+
+interface PersonInter {
+    name : string,
+    email : string
+}
+
+const MYOBJ2 : PersonInter = {
+    name : "AVS",
+    email : "AVS@gmail.com"
+}
+
+const getDetils2 = (key : keyof PersonInter): string=>{
+    return MYOBJ[key]
+}
+
+getDetils2("email")
+
+
+// if we don't know the interface but only have object
+
+
+const getDetils3 = (key : keyof typeof MYOBJ2): string=>{
+    return MYOBJ[key]
+}
+
+
+
+
+
+
+
+
+
 //////////////////////////////////////////////////////////////////////////////////
 
 type FunType = (n: number, m: number, l?: number) => number;
@@ -181,7 +276,7 @@ const errorHandler = (): never => {
 }
 
 
-//////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 //Classes
 
@@ -291,3 +386,63 @@ class Product implements ProductType , GiveId{
     getId = () => this.id
 
 }
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+//Type Assertion
+
+//When anything can be multiple type then typeScript doesn't allow many features
+
+// Telling typescript that we know beter then it does and follow our instructions
+
+
+const addOrConcat = (a:number , b:number , c:'add'| 'conact' ): number|string =>{
+    if(c='add') return a+b;
+    return '' + a + b
+}
+
+// let myVal: string = addOrConcat(2 , 2 , 'conact') NOT ALLOWED as addOrConcat can return number or string but we are assigning it to a number
+
+//Here comes Type Assertion
+
+let myVal: string = addOrConcat(2 , 2 , 'conact') as string
+
+//THIS IS WRONG AS WE ARE RETURNING STRING , BUT TS HAS NO PROBLEM WITH IT BECAUSE OF TYPE ASSERTION
+
+let myVal1: number = addOrConcat(2 , 2 , 'conact') as number
+
+
+//It is generelly use while accessing dom element
+
+const MyButton = document.getElementById('btn')
+MyButton?.onclick //? is there because MyButton can be null
+
+//TO FIX THIS
+
+const MyButton1 = document.getElementById('btn')! //we can use notnull operator
+MyButton1.onclick 
+
+
+const MyButton2 = document.getElementById('btn') as HTMLButtonElement //we can use type assertion
+MyButton2.onclick
+
+
+const MyButton3 = <HTMLButtonElement>document.getElementById('btn') //we can use type assertion
+MyButton3.onclick
+
+
+const image = document.getElementById('myimg');
+// image.scr NOT ALLOWED
+
+const image1 = document.getElementById('myimg') as HTMLImageElement
+
+image1.src // ALLOWED
+
+
+
+
+
+
+
+
+
