@@ -439,7 +439,202 @@ const image1 = document.getElementById('myimg') as HTMLImageElement
 image1.src // ALLOWED
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////
 
+//Type Utility
+
+//Partial<Type>
+
+type User = {
+    name : string,
+    email : string
+}
+
+type User2 = Partial<User>
+//hover on user to see the type
+//both name and email will be optional in this field
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+
+// Required<Type> --Opposite of partial
+
+
+type User3 = {
+    name? : string,
+    email : string
+}
+
+type User4 = Required<User3>
+//hover on User4 to see the type
+//both name and email will be required
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+//Readonly<Type> 
+
+type User5 = {
+    name : string,
+    email : string
+}
+
+//in the object of User5 type we can change value after creating , but if we want to convert both name and email keys to readonly type then Readonly
+
+const OBJC : Readonly<User5> = {
+    name : "AVS",
+    email: "AVS"
+}
+
+// OBJC.name = "ADI" not allowed as :-
+
+// type User5 = {
+//   readonly name : string,
+//   readonly  email : string
+// }
+
+//something like this has happened
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+
+// Record <Keys , Type>
+
+type User6 = {
+    name : string,
+    email : string,
+    address : string
+}
+
+//This can be made using record
+
+type User7 = Record<"name"|"email"|"address" , string>
+
+//User6 amd User7 type are same
+
+//Example
+
+type User8 = {
+    john : {
+        age : number
+    },
+    levi : {
+        age : number
+    },
+    elon : {
+        age : number
+    },
+    jack : {
+        age : number
+    }
+}
+
+//complex types like this can be created easily using Record
+
+type userAge = {
+    age : number
+}
+
+type userName = "john"|"levi"|"elon"|"jack"
+
+type UserInfo2 = Record<userName , userAge>
+//all the userName are of type userAge
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+//Pick<Type , Keys>
+
+
+interface OrderInfo {
+    readonly id: string,
+    user : string,
+    city : string,
+    state : string,
+    country : string,
+    status : string
+}
+
+//if we want to pick some from OrderInfo type
+
+type ShippingInfo = Pick<OrderInfo , "city"|"state"| "country">
+
+//similary
+
+// Omit <Type , Keys>
+
+type ShippingInfo2 = Omit<OrderInfo , 'user'|'status'| 'id'>
+
+//note : ShippingInfo and Shipping Info2 are same
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+// Exclude <Type , ExcludeUnion>
+
+type MyUnion = string|number|boolean;
+
+type Random = Exclude<MyUnion , boolean>
+
+// exlude given type from our type
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+//Extract<Type , Union>
+
+type MyUnion2 = string|number|boolean;
+
+type Random2 = Extract<MyUnion2 , boolean>
+//extract given data type from provided type
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+// NonNullable<Type>
+
+type MyUnion3 = string|number|boolean|null|undefined;
+type Random3 = NonNullable<MyUnion3>
+
+//remove null and undefined
+
+////////////////////////////////////////////////////////////////////////////////////
+
+//Parameters<Type>
+
+const Random4 = (a: number , b:number):void =>{
+    console.log(a+b)
+
+}
+
+type Random5 = Parameters<typeof Random4>
+
+//hover on Random5 to see it's type
+//it gives type of array of parameters
+
+
+////////////////////////////////////////////////////////////////////////////////////
+
+//ConstructorParameters<Type>
+class SampleClass {
+    constructor(public s : string , public t : string){
+
+    }
+}
+type Random6 = ConstructorParameters<typeof SampleClass>
+//give array of type of parameter of a class
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+//ReturnType<type>
+//give return type of function
+const Random7 = (a: number , b:number):string =>{
+    console.log(a+b)
+    return String(a+b)
+
+}
+
+type Random7Type = ReturnType<typeof Random7>
 
 
 
