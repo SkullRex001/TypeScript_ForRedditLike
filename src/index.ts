@@ -103,24 +103,24 @@ const obj3: Obj4 = {
 
 
 interface Person {
-    name : string,
-    email : string
+    name: string,
+    email: string
 }
 
-const myobj : Person = {
-    name : "AVS",
-    email : "AVS@gmail.com"
+const myobj: Person = {
+    name: "AVS",
+    email: "AVS@gmail.com"
 }
 
 // Allowed
 
-const getName = (): string =>{
+const getName = (): string => {
     return myobj["name"]
 }
 
 //Allowed
 
-const getEmail = () : string =>{
+const getEmail = (): string => {
     return myobj["email"]
 }
 
@@ -134,9 +134,9 @@ const getEmail = () : string =>{
 
 //ALLOWED
 
-type KEY = 'name'| 'email'
+type KEY = 'name' | 'email'
 
-const getDetils = (key:KEY): string=>{
+const getDetils = (key: KEY): string => {
     return myobj[key]
 }
 
@@ -144,19 +144,19 @@ const getDetils = (key:KEY): string=>{
 // Defining general interface for object in which we don't know the number of keys
 
 interface PERSON {
-    [key : string] : string
+    [key: string]: string
 }
 
-const MYOBJ : PERSON = {
-    name : "AVS",
-    email : "AVS@gmail.com"
+const MYOBJ: PERSON = {
+    name: "AVS",
+    email: "AVS@gmail.com"
 }
 
 // ALLOWED
 
 // This is because of general nature of interface
 
-const GETDETAILS = (key:string): string=>{
+const GETDETAILS = (key: string): string => {
     return MYOBJ[key]
 }
 
@@ -165,16 +165,16 @@ const GETDETAILS = (key:string): string=>{
 //Best Solution
 
 interface PersonInter {
-    name : string,
-    email : string
+    name: string,
+    email: string
 }
 
-const MYOBJ2 : PersonInter = {
-    name : "AVS",
-    email : "AVS@gmail.com"
+const MYOBJ2: PersonInter = {
+    name: "AVS",
+    email: "AVS@gmail.com"
 }
 
-const getDetils2 = (key : keyof PersonInter): string=>{
+const getDetils2 = (key: keyof PersonInter): string => {
     return MYOBJ[key]
 }
 
@@ -184,7 +184,7 @@ getDetils2("email")
 // if we don't know the interface but only have object
 
 
-const getDetils3 = (key : keyof typeof MYOBJ2): string=>{
+const getDetils3 = (key: keyof typeof MYOBJ2): string => {
     return MYOBJ[key]
 }
 
@@ -365,11 +365,11 @@ interface ProductType {
 }
 
 interface GiveId {
-    getId : () => string
+    getId: () => string
 }
 //note we cannot declare private and protected here , if we want to do this , we will have to add prop in class with access modifiers directly
 
-class Product implements ProductType , GiveId{
+class Product implements ProductType, GiveId {
     name: string;
     price: number;;
     stock: string;
@@ -396,8 +396,8 @@ class Product implements ProductType , GiveId{
 // Telling typescript that we know beter then it does and follow our instructions
 
 
-const addOrConcat = (a:number , b:number , c:'add'| 'conact' ): number|string =>{
-    if(c='add') return a+b;
+const addOrConcat = (a: number, b: number, c: 'add' | 'conact'): number | string => {
+    if (c = 'add') return a + b;
     return '' + a + b
 }
 
@@ -405,11 +405,11 @@ const addOrConcat = (a:number , b:number , c:'add'| 'conact' ): number|string =>
 
 //Here comes Type Assertion
 
-let myVal: string = addOrConcat(2 , 2 , 'conact') as string
+let myVal: string = addOrConcat(2, 2, 'conact') as string
 
 //THIS IS WRONG AS WE ARE RETURNING STRING , BUT TS HAS NO PROBLEM WITH IT BECAUSE OF TYPE ASSERTION
 
-let myVal1: number = addOrConcat(2 , 2 , 'conact') as number
+let myVal1: number = addOrConcat(2, 2, 'conact') as number
 
 
 //It is generelly use while accessing dom element
@@ -420,7 +420,7 @@ MyButton?.onclick //? is there because MyButton can be null
 //TO FIX THIS
 
 const MyButton1 = document.getElementById('btn')! //we can use notnull operator
-MyButton1.onclick 
+MyButton1.onclick
 
 
 const MyButton2 = document.getElementById('btn') as HTMLButtonElement //we can use type assertion
@@ -446,8 +446,8 @@ image1.src // ALLOWED
 //Partial<Type>
 
 type User = {
-    name : string,
-    email : string
+    name: string,
+    email: string
 }
 
 type User2 = Partial<User>
@@ -462,8 +462,8 @@ type User2 = Partial<User>
 
 
 type User3 = {
-    name? : string,
-    email : string
+    name?: string,
+    email: string
 }
 
 type User4 = Required<User3>
@@ -477,14 +477,14 @@ type User4 = Required<User3>
 //Readonly<Type> 
 
 type User5 = {
-    name : string,
-    email : string
+    name: string,
+    email: string
 }
 
 //in the object of User5 type we can change value after creating , but if we want to convert both name and email keys to readonly type then Readonly
 
-const OBJC : Readonly<User5> = {
-    name : "AVS",
+const OBJC: Readonly<User5> = {
+    name: "AVS",
     email: "AVS"
 }
 
@@ -505,43 +505,43 @@ const OBJC : Readonly<User5> = {
 // Record <Keys , Type>
 
 type User6 = {
-    name : string,
-    email : string,
-    address : string
+    name: string,
+    email: string,
+    address: string
 }
 
 //This can be made using record
 
-type User7 = Record<"name"|"email"|"address" , string>
+type User7 = Record<"name" | "email" | "address", string>
 
 //User6 amd User7 type are same
 
 //Example
 
 type User8 = {
-    john : {
-        age : number
+    john: {
+        age: number
     },
-    levi : {
-        age : number
+    levi: {
+        age: number
     },
-    elon : {
-        age : number
+    elon: {
+        age: number
     },
-    jack : {
-        age : number
+    jack: {
+        age: number
     }
 }
 
 //complex types like this can be created easily using Record
 
 type userAge = {
-    age : number
+    age: number
 }
 
-type userName = "john"|"levi"|"elon"|"jack"
+type userName = "john" | "levi" | "elon" | "jack"
 
-type UserInfo2 = Record<userName , userAge>
+type UserInfo2 = Record<userName, userAge>
 //all the userName are of type userAge
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -551,22 +551,22 @@ type UserInfo2 = Record<userName , userAge>
 
 interface OrderInfo {
     readonly id: string,
-    user : string,
-    city : string,
-    state : string,
-    country : string,
-    status : string
+    user: string,
+    city: string,
+    state: string,
+    country: string,
+    status: string
 }
 
 //if we want to pick some from OrderInfo type
 
-type ShippingInfo = Pick<OrderInfo , "city"|"state"| "country">
+type ShippingInfo = Pick<OrderInfo, "city" | "state" | "country">
 
 //similary
 
 // Omit <Type , Keys>
 
-type ShippingInfo2 = Omit<OrderInfo , 'user'|'status'| 'id'>
+type ShippingInfo2 = Omit<OrderInfo, 'user' | 'status' | 'id'>
 
 //note : ShippingInfo and Shipping Info2 are same
 
@@ -574,9 +574,9 @@ type ShippingInfo2 = Omit<OrderInfo , 'user'|'status'| 'id'>
 
 // Exclude <Type , ExcludeUnion>
 
-type MyUnion = string|number|boolean;
+type MyUnion = string | number | boolean;
 
-type Random = Exclude<MyUnion , boolean>
+type Random = Exclude<MyUnion, boolean>
 
 // exlude given type from our type
 
@@ -584,16 +584,16 @@ type Random = Exclude<MyUnion , boolean>
 
 //Extract<Type , Union>
 
-type MyUnion2 = string|number|boolean;
+type MyUnion2 = string | number | boolean;
 
-type Random2 = Extract<MyUnion2 , boolean>
+type Random2 = Extract<MyUnion2, boolean>
 //extract given data type from provided type
 
 /////////////////////////////////////////////////////////////////////////////////////
 
 // NonNullable<Type>
 
-type MyUnion3 = string|number|boolean|null|undefined;
+type MyUnion3 = string | number | boolean | null | undefined;
 type Random3 = NonNullable<MyUnion3>
 
 //remove null and undefined
@@ -602,14 +602,14 @@ type Random3 = NonNullable<MyUnion3>
 
 //Parameters<Type>
 
-const Random4 = (a: number , b:number):void =>{
-    console.log(a+b)
+const Random4 = (a: number, b: number): void => {
+    console.log(a + b)
 
 }
 
 type Random5 = Parameters<typeof Random4>
 
-//hover on Random5 to see it's type
+//hover on Random5 to see it's typeget
 //it gives type of array of parameters
 
 
@@ -617,7 +617,7 @@ type Random5 = Parameters<typeof Random4>
 
 //ConstructorParameters<Type>
 class SampleClass {
-    constructor(public s : string , public t : string){
+    constructor(public s: string, public t: string) {
 
     }
 }
@@ -628,16 +628,109 @@ type Random6 = ConstructorParameters<typeof SampleClass>
 /////////////////////////////////////////////////////////////////////////////////////
 //ReturnType<type>
 //give return type of function
-const Random7 = (a: number , b:number):string =>{
-    console.log(a+b)
-    return String(a+b)
+const Random7 = (a: number, b: number): string => {
+    console.log(a + b)
+    return String(a + b)
 
 }
 
 type Random7Type = ReturnType<typeof Random7>
 
 
+////////////////////////////////////////////////////////////////////////////////////////
+
+//Generics :- it acts as a placeholder for type
+
+type Personp = {
+
+    name: string,
+    age: number
+
+}
+
+const funcf = <T>(n: T): T => {
+    return n
+}
+
+
+const person1: Personp = {
+    name: "AVS",
+    age: 21
+}
+
+const ans = funcf<Personp>(person1)
+// const ans = funcf(person1) this will also work , but above one is general practice
+
+// <T> will be replaced by Personp data type
 
 
 
+
+const funcG = <T, U>(n: T, o: U): { n: T, o: U } => {
+
+    return { n, o }
+
+}
+
+//We can also pass multiple data type is generic
+
+funcG<number, string>(1, "AVS")
+
+
+type PersonG = {
+    name: string,
+    age: number
+}
+
+type PersonG2 = {
+    name: string,
+    age: number,
+    email: string
+}
+
+const userG: PersonG = {
+    name: "AVS",
+    age: 22
+
+}
+
+const userG2: PersonG2 = {
+    name: "AVS2",
+    age: 22,
+    email: 'AVS@gmail.com'
+
+}
+
+//using extends in generic
+
+const FunG = <T, U extends T>(a: T, b: U) => {
+    return { a, b }
+}
+//Now you can be of any type but it must extend from U
+
+FunG(userG, userG2)
+
+// Creating filter using Generic
+
+type PersonGG = {
+    name: string,
+    age: number
+}
+
+const PersonGGArray: PersonGG[] = [
+    { name: 'AVS', age: 22 },
+    { name: 'Harsh', age: 23 },
+    { name: 'Baban', age: 25 },
+    { name: 'Prem', age: 30 },
+    { name: 'Ganga', age: 22 },
+    { name: 'Mishra', age: 22 },
+    { name: 'Naina', age: 25 },
+]
+
+
+const filterByProp = <T, U extends keyof T>(Array: T[], Key: U, Value: T[U]) => {                               //T[U] means either PersonGG[name]  PersonGG[age]
+    return Array.filter((item) => item[Key] === Value)
+}
+
+filterByProp(PersonGGArray, "age", 23)
 
